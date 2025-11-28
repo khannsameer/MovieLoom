@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 w-full h-16 bg-neutral-600 opacity-75">
+    <header className="fixed top-0 w-full h-16 bg-neutral-600 opacity-75 z-40">
       <div className="container mx-auto px-3 flex items-center h-full">
         <Link to={"/"}>
           <img src={logo} alt="logo" width={120} />
@@ -29,9 +29,9 @@ const Header = () => {
         <nav className="hidden lg:flex items-center gap-2 ml-5">
           {navigation.map((nav, index) => {
             return (
-              <div>
+              <div key={nav.lable}>
                 <NavLink
-                  key={nav.lable}
+                  // key={nav.lable}
                   to={nav.href}
                   className={({ isActive }) =>
                     `px-2 hover:text-neutral-100 ${
