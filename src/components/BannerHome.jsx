@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
@@ -9,9 +9,21 @@ const BannerHome = () => {
 
   const [currentImage, setCurrentImage] = useState(0);
 
-  const handleNext = () => {};
+  const handleNext = () => {
+    setCurrentImage((prev) => (prev === bannerData.length - 1 ? 0 : prev + 1));
+  };
 
-  const handlePrevious = () => {};
+  const handlePrevious = () => {
+    setCurrentImage((prev) => (prev === 0 ? bannerData.length - 1 : prev - 1));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext(); // handles looping automatically
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [currentImage]);
 
   return (
     <section className="w-full h-full">
@@ -22,7 +34,7 @@ const BannerHome = () => {
           return (
             <div
               key={data.id}
-              className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group"
+              className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-transform duration-1000 ease-[cubic-bezier(0.45,0,0.55,1)] will-change-transform hover:scale-[1.01]"
               style={{ transform: `translateX(-${currentImage * 100}%)` }}
             >
               <div className="w-full h-full">
