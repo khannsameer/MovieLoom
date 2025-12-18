@@ -33,7 +33,7 @@ const BannerHome = () => {
 
           return (
             <div
-              key={data.id}
+              key={data.id + "bannerHome" + index}
               className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-transform duration-1000 ease-[cubic-bezier(0.45,0,0.55,1)] will-change-transform hover:scale-[1.01]"
               style={{ transform: `translateX(-${currentImage * 100}%)` }}
             >
