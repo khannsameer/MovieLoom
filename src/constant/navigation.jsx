@@ -6,12 +6,12 @@ import { IoSearchOutline } from "react-icons/io5";
 export const navigation = [
   {
     lable: "TV Shows",
-    href: "tv",
+    href: "/tv",
     icon: <PiTelevisionLight />,
   },
   {
     lable: "Movies",
-    href: "movie",
+    href: "/movie",
     icon: <BiMoviePlay />,
   },
 ];

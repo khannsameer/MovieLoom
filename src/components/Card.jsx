@@ -1,11 +1,14 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const Card = ({ data, trending, index }) => {
   const imageURL = useSelector((state) => state.movieData.imageURL);
   return (
-    <div className="w-full max-w-[230px] h-80 overflow-hidden rounded relative">
+    <Link
+      to={"/" + data.media_type + "/" + data.id}
+      className="w-full max-w-[230px] h-80 overflow-hidden rounded relative"
+    >
       <img src={imageURL + data.poster_path} alt="" />
       <div className="absolute top-0">
         {trending && (
@@ -21,7 +24,7 @@ const Card = ({ data, trending, index }) => {
         <div className="text-sm text-neutral-400 flex justify-between items-center">
           <p>
             {moment(data.release_date || data.first_air_date).format(
-              "MMM Do YYY"
+              "MMM Do YYYY"
             )}
           </p>
           <p className="bg-black px-1 rounded text-xs text-white/65">
@@ -29,7 +32,7 @@ const Card = ({ data, trending, index }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
