@@ -13,11 +13,18 @@ const Card = ({ data, trending, index, media_type }) => {
         group w-full max-w-[230px] h-80 relative block rounded-xl overflow-hidden transition-all duration-300 ease-out will-change-transform hover:scale-[1.06] hover:shadow-2xl hover:z-10"
     >
       {/* Poster */}
-      <img
-        src={imageURL + data.poster_path}
-        alt={data.title || data.name}
-        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-      />
+
+      {data.poster_path ? (
+        <img
+          src={imageURL + data.poster_path}
+          alt={data.title || data.name}
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+        />
+      ) : (
+        <div className="bg-neutral-800 h-full w-full flex items-center justify-center">
+          Image not available
+        </div>
+      )}
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
