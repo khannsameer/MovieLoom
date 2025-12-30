@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useFetch = (endPoint) => {
-  const [data, setData] = useState([]);
+const useFetchDetails = (endPoint) => {
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
@@ -11,7 +11,7 @@ const useFetch = (endPoint) => {
       const response = await axios.get(endPoint);
       setLoading(false);
       // console.log(response.data.results);
-      setData(response.data.results);
+      setData(response.data);
     } catch (error) {
       console.log("Error", error);
     }
@@ -24,4 +24,4 @@ const useFetch = (endPoint) => {
   return { data, loading };
 };
 
-export default useFetch;
+export default useFetchDetails;
