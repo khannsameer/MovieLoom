@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../components/Card";
+import { FaSearch } from "react-icons/fa";
 
 const SearchPage = () => {
   const location = useLocation();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -48,7 +50,20 @@ const SearchPage = () => {
 
   return (
     <div className="py-16">
-      <div className="container mx-auto">
+      <div className="lg:hidden px-3 sticky top-[70px] z-30">
+        <div className="relative flex items-center bg-neutral-900/90 backdrop-blur-md rounded-full border border-neutral-700 focus-within:border-red-600 focus-within:shadow-[0_0_20px_rgba(220,38,38,0.4)]  transition-all duration-300">
+          {/* Search Icon */}
+          <FaSearch className="ml-4 text-neutral-400 text-sm" />
+          {/* Input */}
+          <input
+            type="text"
+            placeholder="Search movies, shows..."
+            onChange={(e) => navigate(`/search?q=${e.target.value}`)}
+            className="w-full bg-transparent py-2.5 px-3 pr-4 text-white placeholder:text-neutral-500  outline-none text-sm"
+          />
+        </div>
+      </div>
+      <div className="container mx-auto px-3 sm:px-4">
         <h3 className="capitalize text-lg lg:text-xl font-semibold my-3">
           Search Results
         </h3>
