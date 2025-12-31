@@ -4,6 +4,8 @@ import moment from "moment";
 import useFetchDetails from "../hooks/UseFetchDetails";
 import useFetch from "../hooks/UseFetch";
 import HorizontalScrollCard from "../components/HorizontalScrollCard";
+import { useState } from "react";
+import VideoPlay from "../components/VideoPlay";
 
 const DetailsPage = () => {
   const { explore, id } = useParams();
@@ -14,11 +16,18 @@ const DetailsPage = () => {
   const { data: recommendationsData } = useFetch(
     `/${explore}/${id}/recommendations`
   );
+  const [playVideo, setPlayVideo] = useState(false);
+  const [playVideoId, setPlayVideoId] = useState("");
 
   // console.log("data", data);
   // console.log("castData", castData);
   // console.log("Similar", similarData);
   // console.log("recommendations", recommendationsData);
+
+  const handlePlayVideo = (data) => {
+    setPlayVideoId(data);
+    setPlayVideo(true);
+  };
 
   const importantCrew = castData?.crew?.filter(
     (person) =>
@@ -54,6 +63,12 @@ const DetailsPage = () => {
             alt={data.title}
             className=" w-64 sm:w-72 lg:w-80 rounded-xl shadow-xl"
           />
+          <button
+            onClick={() => handlePlayVideo(data)}
+            className="mt-5 w-full py-3 px-6 text-lg font-bold rounded-xl bg-gray-900 text-white relative overflow-hidden border-2 border-red-500 shadow-lg hover:text-red-500 transition-colors duration-300 ease-in-out before:absolute before:top-0 before:left-[-75%] before:w-1/2 before:h-full before:bg-red-500 before:opacity-20 before:transform before:rotate-12 before:transition-all before:duration-500 hover:before:left-[125%] cursor-pointer"
+          >
+            Play Now
+          </button>
         </div>
 
         {/* Details */}
@@ -170,7 +185,7 @@ const DetailsPage = () => {
 
       {/* Crew Section */}
       {importantCrew?.length > 0 && (
-        <div className="relative container mx-auto px-4 pb-10">
+        <div className="relative container mx-auto px-4 pb-2">
           <h2 className="text-xl font-semibold mb-4 lg:text-3xl">Crew</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -219,6 +234,14 @@ const DetailsPage = () => {
           />
         </div>
       </div>
+
+      {playVideo && (
+        <VideoPlay
+          data={playVideoId}
+          close={() => setPlayVideo(false)}
+          media_type={explore}
+        />
+      )}
     </section>
   );
 };

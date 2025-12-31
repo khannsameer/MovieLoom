@@ -55,15 +55,13 @@ const ExplorePage = () => {
         </h3>
 
         <div className="grid grid-cols-[repeat(auto-fit,230px)] gap-7 justify-center lg:justify-start">
-          {data.map((exploreData, index) => {
-            return (
-              <Card
-                data={exploreData}
-                key={exploreData.id + "exploreSection"}
-                media_type={params.explore}
-              />
-            );
-          })}
+          {data.map((exploreData, index) => (
+            <Card
+              key={`${params.explore}-${exploreData.id}-${index}`}
+              data={exploreData}
+              media_type={params.explore}
+            />
+          ))}
         </div>
       </div>
     </div>
