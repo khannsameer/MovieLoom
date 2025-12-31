@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -16,10 +15,10 @@ const DetailsPage = () => {
     `/${explore}/${id}/recommendations`
   );
 
-  console.log("data", data);
-  console.log("castData", castData);
-  console.log("Similar", similarData);
-  console.log("recommendations", recommendationsData);
+  // console.log("data", data);
+  // console.log("castData", castData);
+  // console.log("Similar", similarData);
+  // console.log("recommendations", recommendationsData);
 
   const importantCrew = castData?.crew?.filter(
     (person) =>
@@ -148,7 +147,10 @@ const DetailsPage = () => {
             {castData?.cast
               ?.filter((el) => el?.profile_path)
               .map((cast) => (
-                <div key={cast.id} className="w-32 shrink-0 text-center">
+                <div
+                  key={`cast-${cast.id}-${cast.character}`}
+                  className="w-32 shrink-0 text-center"
+                >
                   <img
                     src={
                       cast.profile_path
@@ -176,7 +178,7 @@ const DetailsPage = () => {
               ?.filter((el) => el?.profile_path)
               .map((crew) => (
                 <div
-                  key={crew.id}
+                  key={`crew-${crew.id}-${crew.job}`}
                   className="flex items-center gap-4 bg-neutral-900/70 p-4 rounded-xl"
                 >
                   <img

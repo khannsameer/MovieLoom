@@ -50,7 +50,7 @@ const ExplorePage = () => {
   return (
     <div className="py-16">
       <div className="container mx-auto">
-        <h3 className="capitalize text-lg lg:text-xl font-semibold my-3">
+        <h3 className="capitalize text-lg lg:text-xl font-semibold my-3 px-3">
           Popular {params.explore} show
         </h3>
 
