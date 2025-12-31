@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const BannerHome = () => {
   const bannerData = useSelector((state) => state.movieData.bannerData);
@@ -78,9 +79,12 @@ const BannerHome = () => {
                     <span>|</span>
                     <p>View : {Number(data.popularity).toFixed(0)}</p>
                   </div>
-                  <button className="inline-flex items-center mt-3 gap-2 px-5 py-2 font-semibold text-white rounded-2xl bg-linear-to-r from-red-600 to-orange-500 transform-gpu will-change-transform transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-0.5 hover:shadow-2xl active:scale-95 active:translate-y-0 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 motion-reduce:transition-none">
+                  <Link
+                    to={"/" + data?.media_type + "/" + data.id}
+                    className="inline-flex items-center mt-3 gap-2 px-5 py-2 font-semibold text-white rounded-2xl bg-linear-to-r from-red-600 to-orange-500 transform-gpu will-change-transform transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-0.5 hover:shadow-2xl active:scale-95 active:translate-y-0 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 motion-reduce:transition-none"
+                  >
                     Play Now
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
