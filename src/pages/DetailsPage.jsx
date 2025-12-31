@@ -3,16 +3,23 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import useFetchDetails from "../hooks/UseFetchDetails";
+import useFetch from "../hooks/UseFetch";
+import HorizontalScrollCard from "../components/HorizontalScrollCard";
 
 const DetailsPage = () => {
   const { explore, id } = useParams();
   const imageURL = useSelector((state) => state.movieData.imageURL);
-
   const { data } = useFetchDetails(`/${explore}/${id}`);
   const { data: castData } = useFetchDetails(`/${explore}/${id}/credits`);
+  const { data: similarData } = useFetch(`/${explore}/${id}/similar`);
+  const { data: recommendationsData } = useFetch(
+    `/${explore}/${id}/recommendations`
+  );
 
   console.log("data", data);
   console.log("castData", castData);
+  console.log("Similar", similarData);
+  console.log("recommendations", recommendationsData);
 
   const importantCrew = castData?.crew?.filter(
     (person) =>
@@ -135,59 +142,81 @@ const DetailsPage = () => {
       {/* Cast Section */}
       {castData?.cast?.length > 0 && (
         <div className="relative container mx-auto px-4 pb-20">
-          <h2 className="text-xl font-semibold mb-4">Cast</h2>
+          <h2 className="text-xl font-semibold mb-4 lg:text-3xl">Cast</h2>
 
-          <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {castData.cast.map((cast) => (
-              <div key={cast.id} className="w-32 shrink-0 text-center">
-                <img
-                  src={
-                    cast.profile_path
-                      ? imageURL + cast.profile_path
-                      : "/avatar.png"
-                  }
-                  alt={cast.name}
-                  className="w-full h-40 object-cover rounded-lg mb-2"
-                />
-                <p className="text-sm font-medium">{cast.name}</p>
-                <p className="text-xs text-neutral-400">{cast.character}</p>
-              </div>
-            ))}
+          <div className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth">
+            {castData?.cast
+              ?.filter((el) => el?.profile_path)
+              .map((cast) => (
+                <div key={cast.id} className="w-32 shrink-0 text-center">
+                  <img
+                    src={
+                      cast.profile_path
+                        ? imageURL + cast.profile_path
+                        : "/avatar.png"
+                    }
+                    alt={cast.name}
+                    className="w-full h-40 object-cover rounded-lg mb-2"
+                  />
+                  <p className="text-sm font-medium">{cast.name}</p>
+                  <p className="text-xs text-neutral-400">{cast.character}</p>
+                </div>
+              ))}
           </div>
         </div>
       )}
 
       {/* Crew Section */}
       {importantCrew?.length > 0 && (
-        <div className="relative container mx-auto px-4 pb-20">
-          <h2 className="text-xl font-semibold mb-4">Crew</h2>
+        <div className="relative container mx-auto px-4 pb-10">
+          <h2 className="text-xl font-semibold mb-4 lg:text-3xl">Crew</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {importantCrew.map((crew) => (
-              <div
-                key={crew.id}
-                className="flex items-center gap-4 bg-neutral-900/70 p-4 rounded-xl"
-              >
-                <img
-                  src={
-                    crew.profile_path
-                      ? imageURL + crew.profile_path
-                      : "/avatar.png"
-                  }
-                  alt={crew.name}
-                  className="w-18 h-18 rounded-full object-cover"
-                />
-
-                <div>
-                  <p className="text-sm font-medium">{crew.name}</p>
-                  <p className="text-xs text-neutral-400">{crew.job}</p>
-                  <p className="text-xs text-neutral-400">{crew.department}</p>
+            {importantCrew
+              ?.filter((el) => el?.profile_path)
+              .map((crew) => (
+                <div
+                  key={crew.id}
+                  className="flex items-center gap-4 bg-neutral-900/70 p-4 rounded-xl"
+                >
+                  <img
+                    src={
+                      crew.profile_path
+                        ? imageURL + crew.profile_path
+                        : "/avatar.png"
+                    }
+                    alt={crew.name}
+                    className="w-18 h-18 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-medium">{crew.name}</p>
+                    <p className="text-xs text-neutral-400">{crew.job}</p>
+                    <p className="text-xs text-neutral-400">
+                      {crew.department}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       )}
+
+      {/* Similar & Recommendations Section */}
+      <div className="relative z-20 bg-black pt-16 pb-32">
+        <div className="container mx-auto px-4 space-y-16">
+          <HorizontalScrollCard
+            data={similarData}
+            heading={`Similar ${explore}`}
+            media_type={explore}
+          />
+
+          <HorizontalScrollCard
+            data={recommendationsData}
+            heading={`Recommended ${explore}`}
+            media_type={explore}
+          />
+        </div>
+      </div>
     </section>
   );
 };
