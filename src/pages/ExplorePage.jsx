@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../components/Card";
+import CardSkeleton from "../components/CardSkeleton";
 
 const ExplorePage = () => {
   const params = useParams();
@@ -55,9 +56,16 @@ const ExplorePage = () => {
         </h3>
 
         <div className="grid grid-cols-[repeat(auto-fit,230px)] gap-7 justify-center lg:justify-start">
-          {data.map((exploreData, index) => (
+          {/* Skeleton loader */}
+          {data.length === 0 &&
+            Array.from({ length: 10 }).map((_, i) => (
+              <CardSkeleton key={`skeleton-${i}`} />
+            ))}
+
+          {/* Actual cards */}
+          {data.map((exploreData) => (
             <Card
-              key={`${params.explore}-${exploreData.id}-${index}`}
+              key={`${params.explore}-${exploreData.id}`}
               data={exploreData}
               media_type={params.explore}
             />

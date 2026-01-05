@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import userIcon from "../assets/user.png";
 import { IoSearchOutline } from "react-icons/io5";
 import { navigation } from "../constant/navigation";
+import logo2 from "../assets/logo2.png";
 
 const Header = () => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const Header = () => {
     <header className="fixed top-0 w-full h-16 bg-black opacity-50 z-40">
       <div className="container mx-auto px-3 flex items-center h-full">
         <Link to={"/"}>
-          <img src={logo} alt="logo" width={120} />
+          <img src={logo2} alt="logo" width={210} className="mt-16" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-2 ml-5">
